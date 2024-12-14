@@ -1,0 +1,16 @@
+# python_server/Dockerfile
+FROM python:3.8
+
+WORKDIR /app
+
+COPY requirements.txt .
+COPY inventory_pb2.py .
+COPY inventory_pb2_grpc.py .
+COPY ./python_server/server.py .
+
+EXPOSE 50051
+
+RUN pip install -r requirements.txt
+
+CMD ["python", "server.py"]
+

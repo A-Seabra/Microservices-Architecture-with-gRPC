@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  server-script:
+    container_name: server-script
+    build:
+      context: .
+      dockerfile: python_server/dockerfile
+    ports:
+      - "50051:50051"
+
+  api-script:
+    container_name: api-script
+    build:
+      context: .
+      dockerfile: api/dockerfile  # Ensure this path is correct
+    ports:
+      - "8000:8000"
+
+  interface:
+    container_name: interface
+    build:
+      context: ./interface  # Ensure this path is correct
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./interface:/app  # Ensure this path is correct
+    working_dir: /app
+
+  java-server:
+    container_name: java-server
+    build:
+      context: .
+      dockerfile: grpc/dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./grpc:/app

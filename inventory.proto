@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package inventory;
+
+option java_package = "com.proto.demand";
+option java_multiple_files = true;
+
+message OptimizeRequest{
+    string ItemID = 1; 
+    int32 CurrentStock = 2; 
+    int32 PredictedDemand = 3; 
+    int32 ReorderLevel = 4;
+}
+
+message DemandRequest{
+    string ItemID = 1; 
+    int32 CurrentStock = 2; 
+    int32 ReorderLevel = 3;
+}
+
+enum Inventoryadjustment{
+    SCALE_UP = 0;
+    SCALE_DOWN = 1;
+}
+
+message OptimizeResponse{
+    int32 ReorderQuantity = 1;
+    Inventoryadjustment adjustment = 2;
+}
+
+message DemandResponse{
+    int32 DemandPredicted = 1;
+}
+
+service InventoryOptimization {
+    rpc Optimize (OptimizeRequest) returns (OptimizeResponse) {}
+    rpc Demand (DemandRequest) returns (DemandResponse) {}
+}

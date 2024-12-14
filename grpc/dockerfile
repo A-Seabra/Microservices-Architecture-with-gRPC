@@ -1,0 +1,5 @@
+FROM openjdk:17-slim
+
+COPY grpc/target/grpc-1.0-SNAPSHOT.jar server.jar 
+
+ENTRYPOINT ["java", "-jar","server.jar"]
